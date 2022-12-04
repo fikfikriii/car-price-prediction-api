@@ -2,14 +2,14 @@ from typing import Optional
 from fastapi import FastAPI, HTTPException, Depends, Request,status
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
-from auth.hash_password import Hash
-from auth.jwt_handler import create_access_token
-from auth.authenticate import get_current_user
+from server.auth.hash_password import Hash
+from server.auth.jwt_handler import create_access_token
+from server.auth.authenticate import get_current_user
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.middleware.cors import CORSMiddleware
-from models.userModel import User
+from server.models.userModel import User
 from fastapi import APIRouter
-from config.database import users_collection
+from server.config.database import users_collection
 
 user_router = APIRouter()
 

@@ -1,10 +1,10 @@
 from fastapi import APIRouter
-from config.database import cars_collection
-from models.carModel import Car
-from schemas.carSchema import car_serializer, cars_serializer
+from server.config.database import cars_collection
+from server.models.carModel import Car
+from server.schemas.carSchema import car_serializer, cars_serializer
 from fastapi import Depends
-from auth.authenticate import get_current_user
-from models.userModel import User
+from server.auth.authenticate import get_current_user
+from server.models.userModel import User
 
 car_router = APIRouter()
 

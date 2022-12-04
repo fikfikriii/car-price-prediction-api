@@ -1,63 +1,32 @@
-# Local imports
-import datetime
-from fastapi import FastAPI, HTTPException
-from joblib import load
-from pydantic import BaseModel
+import uvicorn
+from fastapi import FastAPI
+from server.routes.carRoute import car_router
+from server.routes.userRoute import user_router
+from server.routes.houseRoute import house_router
 
-# Load the model
-car_svm = load(open('./models/car_price_precition_model.pkl', 'rb'))
+description = """
+Ini adalah API untuk melakukan prediksi harga rumah di Indonesia. Silakan masukan input yang sesuai dengan deksripsi di bawah ini untuk mendapatkan harga rumah berdasarkan kriteria yang Anda inginkan. 🚀
 
-# Load the vectorizer
-vectorizer = load(open('./models/car_price_precition_model.pkl', 'rb'))
+Beberapa instance yang terdapat pada API ini:
 
-# Define variables
-model_name = "Car price prediction"
-version = "v1.0.0"
-app = FastAPI()
+## Users
 
-# Input for data validation
-class Input(BaseModel):
-    perusahaan: str
-    nama_mobil: str
-    transmisi: enumerate("Automatic", "Manual")
-    odo: int
-    tahun: int
+Anda dapat melakukan:
+* **Registrasion**
+* **Login**
 
-    class Config:
-        schema_extra = {
-            "perusahaan": "Daihatsu",
-            "nama_mobil": "Ayla",
-            "transmisi": "Automatic",
-            "odo": 50000,
-            "tahun": 2018,
-        }
+## Items
 
-# Ouput for data validation
-class Output(BaseModel):
-    prediction: int
+Anda dapat ...
+"""
 
-# Default root
-@app.get("/")
-def root():
-    return {"message": "Welcome to Car Price Prediction using FastAPI!"}
+app = FastAPI(
+    title="House Price Prediction API",
+    description=description
+)
+app.include_router(user_router)
+app.include_router(car_router)
+app.include_router(house_router)
 
-@app.get('/info')
-async def model_info():
-    """Return model information, version, how to call"""
-    return {
-        "name": model_name,
-        "version": version
-    }
-
-@app.post('/predict', response_model=Output)
-async def model_predict(input: Input):
-    
-    if(not(input)):
-        raise HTTPException(status_code=400,
-                            detail= "Please provide a valid input.")
-    
-    prediction = car_svm.predict(vectorizer.transform([input]))
-    
-    """Predict with input"""
-    response = get_model_response(input)
-    return response
+if __name__ == '__main__':
+    uvicorn.run("app:app", host="0.0.0.0", port=8090, reload=True)

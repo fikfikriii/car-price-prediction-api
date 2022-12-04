@@ -1,18 +1,12 @@
 import pickle
-import json
 import numpy as np
 from fastapi import Body, APIRouter, HTTPException
-from config.database import houses_collection
-from models.carModel import Car
-from schemas.houseSchema import house_serializer, houses_serializer, get_estimated_price
+from server.config.database import houses_collection
+from server.schemas.houseSchema import house_serializer, houses_serializer, get_estimated_price
 from fastapi import Depends
-from auth.authenticate import get_current_user
-from models.userModel import User
-from models.houseModel import House
-
-global model
-with open('./models/home_price_prediction.pickle', 'rb') as f:
-    model = pickle.load(f)
+from server.auth.authenticate import get_current_user
+from server.models.userModel import User
+from server.models.houseModel import House
 
 house_router = APIRouter(
     tags=['House']
@@ -34,7 +28,7 @@ def add_car(house: House, current_user:User = Depends(get_current_user)):
     return {"status": "ok", "data":house}
 
 @house_router.post("/predict")
-def predict_house_price(house: House) -> dict:
+def predict_house_price(house: House = Body(...)) -> dict:
     if(not(house)):
         raise HTTPException(status_code=400,
                             detail= "Please provide a valid input!")

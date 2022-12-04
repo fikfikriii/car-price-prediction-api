@@ -1,29 +1,33 @@
 ├── @Author  : Muhamad Fikri Nurohman 
 ├── README.md                      <- Brief description of the project
+├── requirements.txt               <- The requirements file for reproducing the environment, e.g.
+│                                     generated with `pip freeze > requirements.txt`
+│── Dockerfile            
+│── app.py                         <- The final Rest API file ─ app.py                         <- The final Rest API file
+├── model                         
+│   ├── data                       <- The customized project packages containing utility functions 
+│   │       ├── DATA RUMAH.xlsx
+│   │       ├── data_rumah_clean.csv
+│   │       └── model_trainer.py
+│   ├── home_price_prediction.ipynb    <- Jupyter notebooks folder for data processing and model building
 │
-├── data                           <- The folder containing the origininal data
-│   ├── Train_data.csv                   <- The train data
-│
-├── models                         
-│   ├── spam_detector_model.pkl    <- Trained and serialized models, model predictions, or model summaries
-│
-├── vectors                        
-│   ├── vectorizer.pkl             <- Trained and serialized vector
-│
-├── notebooks                      <- Jupyter notebooks folder.
-│   ├── Preprocess_Train.ipynb   
-│
-├── docker                         <- folder containing the docker files
-│   ├── Dockerfile            
-│
-├── packages                       <- The customized project packages containing utility functions 
-│       ├── __init__.py
-│       ├── data_preprocessor.py
-│       └── model_trainer.py
-│   
-├── requirements.txt               <- The requirements file for reproducing the analysis environment, e.g.
-│                                       generated with `pip freeze > requirements.txt`
-│
-├── train_model.py                 <- Script to train the model
-│
-├── app.py                         <- The final Rest API file
+├── server                         <- All about the API coding
+│   ├── auth                        
+│   │       ├── authenticate.py
+│   │       ├── hash_password.py
+│   │       └── jwt_handler.py
+│   │
+│   ├── models
+│   │       ├── carModel.py
+│   │       ├── houseModel.py
+│   │       └── userModel.py
+│   │       └── home_price_prediction.pickle
+│   │
+│   ├── routes
+│   │       ├── carRoute.py
+│   │       ├── houseRoute.py
+│   │       └── userRoute.py
+│   │       
+│   ├── schemas
+│   │       ├── carSchema.py
+│   │       ├── houseSchema.py

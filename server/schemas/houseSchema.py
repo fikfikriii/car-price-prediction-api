@@ -1,9 +1,8 @@
 import pickle
-import json
 import numpy as np
 
 global model
-with open('./models/home_price_prediction.pickle', 'rb') as f:
+with open('./server/models/home_price_prediction.pickle', 'rb') as f:
     model = pickle.load(f)
 
 def house_serializer(house) -> dict:
