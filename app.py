@@ -5,7 +5,7 @@ from server.routes.userRoute import user_router
 from server.routes.houseRoute import house_router
 
 description = """
-Ini adalah API untuk melakukan prediksi harga rumah di Indonesia. Silakan masukan input yang sesuai dengan deksripsi di bawah ini untuk mendapatkan harga rumah berdasarkan kriteria yang Anda inginkan. 🚀
+Ini adalah API untuk melakukan prediksi harga mobil-mobil bekas di Indonesia. Silakan masukan input yang sesuai dengan deksripsi di bawah ini untuk mendapatkan harga mobil bekas berdasarkan kriteria yang Anda masukkan. 🚀
 
 Beberapa instance yang terdapat pada API ini:
 
@@ -21,7 +21,7 @@ Anda dapat ...
 """
 
 app = FastAPI(
-    title="House Price Prediction API",
+    title="Car Price Prediction API",
     description=description
 )
 app.include_router(user_router)

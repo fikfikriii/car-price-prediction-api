@@ -1,0 +1,10 @@
+version: '3.4'
+
+services:
+  pricepredictionapi:
+    image: pricepredictionapi
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 8090:8090
