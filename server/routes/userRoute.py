@@ -11,28 +11,30 @@ from server.models.userModel import User
 from fastapi import APIRouter
 from server.config.database import users_collection
 
-user_router = APIRouter()
+user_router = APIRouter(
+	tags = ['User']
+)
 
-@user_router.get("/", tags=["Root"])
-def read_root(current_user:User = Depends(get_current_user)):
-	return {"data":"Ini udh terautentikasi"}
+def user_serializer(user) -> dict:
+    return{
+        "name": user["name"],
+        "email": user["email"]
+    }
 
-@user_router.get("/home", tags=["Root"])
-def print_home(current_user:User = Depends(get_current_user)):
-	return ("Selamat Datang!")
+def users_serializer(users) -> list:
+    return [user_serializer(user) for user in users]
 
-@user_router.post('/register', tags=["User"])
-def create_user(request:User):
+@user_router.post('/register')
+def create_user(request:User) -> dict:
 	hashed_pass = Hash.bcrypt(request.password)
 	user_object = dict(request)
 	user_object["password"] = hashed_pass
-	if users_collection.find_one({"username": request.username}):
-		return {"Message": "Username already exist"}
-	user_id = users_collection.insert_one(user_object)
-	# print(user)
-	return {"User":"created"}
+	if users_collection.find_one({"email": request.email}):
+		return {"Message": "Email already exist"}
+	users_collection.insert_one(user_object)
+	return {"User successfully created"}
 
-@user_router.post('/login', tags=["User"])
+@user_router.post('/login')
 def login(request:OAuth2PasswordRequestForm = Depends()):
 	user = users_collection.find_one({"username":request.username})
 	if not user:
@@ -41,3 +43,10 @@ def login(request:OAuth2PasswordRequestForm = Depends()):
 		raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail = f'Wrong Username or password')
 	access_token = create_access_token(data={"sub": user["username"] })
 	return {"access_token": access_token, "token_type": "bearer"}
+
+@user_router.get('/show_user')
+def show_user():
+    list_user = []
+    for user in users_serializer(users_collection.find()):
+        list_user.append(user)
+    return list_user
