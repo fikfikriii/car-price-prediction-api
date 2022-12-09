@@ -53,5 +53,12 @@ async def get_cars_by_harga(harga_min: int, harga_max: int, current_user:User = 
 
 @car_router.get("/cars/filter")
 async def get_filtered_cars(nama_mobil: str, odo_min: int, odo_max: int, tahun_min: int, tahun_max: int, harga_min: int, harga_max: int, transmisi: Transmisi, current_user:User = Depends(get_current_user)):
-    print("TESSS")
     return carSchema.filter_mobil(nama_mobil, odo_min, odo_max, tahun_min, tahun_max, transmisi, harga_min, harga_max)
+
+@car_router.delete("/cars/{id}")
+def delete_car(id: int):
+    return carSchema.delete(id)
+
+@car_router.post("/cars")
+def create_car(car: Car):
+    return carSchema.create(car)

@@ -9,7 +9,7 @@ import warnings
 warnings.filterwarnings('ignore')
 
 description = """
-Ini adalah API untuk melihat informasi mobil bekas, melakukan prediksi harga, dan menghitung cicilan mobil bekas di Indonesia. Sebelum dapat melakukan request pada endpoints API ini, Anda diwajibkan untuk melakukan **Registrasion** dan **Login** atau melalui tombol **Authorize** pada API ini. Setelah terauthorize, Anda dapat melakukan request pada beberapa endpoints yang terdapat pada API ini, yaitu:
+Ini adalah API untuk melihat informasi mobil bekas, melakukan prediksi harga, melihat rekomendasi mobil bekas, dan menghitung cicilan mobil bekas di Indonesia. Sebelum dapat melakukan request pada endpoints API ini, Anda diwajibkan untuk melakukan **Registrasion** dan **Login** atau melalui tombol **Authorize** pada API ini. Setelah terauthorize, Anda dapat melakukan request pada beberapa endpoints yang terdapat pada API ini, yaitu:
 
 ## Melihat Informasi Mobil Bekas
 Anda dapat melakukan pencarian mobil bekas menggunakan kriteria-kriteria sebagai berikut:
@@ -33,7 +33,7 @@ Anda dapat melihat rekomendasi mobil bekas pada _database_ kami berdasarkan bank
 """
 
 app = FastAPI(
-    title="Car Price Prediction API",
+    title="API Mobil Bekas",
     description=description
 )
 app.include_router(user_router)

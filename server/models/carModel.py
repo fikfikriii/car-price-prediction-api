@@ -5,6 +5,7 @@ class Car(BaseModel):
     tahun: int = Field(default=None)
     odo: int = Field(default=None)
     jenis_transmisi: str = Field(default=None)
+    harga: int = Field(default=None)
     class Config:
         schema_extra = {
             "car_demo" : {

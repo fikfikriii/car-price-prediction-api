@@ -36,12 +36,12 @@ def create_user(request:User) -> dict:
 
 @user_router.post('/login')
 def login(request:OAuth2PasswordRequestForm = Depends()):
-	user = users_collection.find_one({"username":request.username})
+	user = users_collection.find_one({"email":request.username})
 	if not user:
-		raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail = f'No user found with this {request.username} username')
+		raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail = f'No user found with this {request.username} email')
 	if not Hash.verify(user["password"],request.password):
 		raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail = f'Wrong Username or password')
-	access_token = create_access_token(data={"sub": user["username"] })
+	access_token = create_access_token(data={"sub": user["email"] })
 	return {"access_token": access_token, "token_type": "bearer"}
 
 @user_router.get('/show_user')

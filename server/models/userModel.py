@@ -15,12 +15,12 @@ class User(BaseModel):
         }
 
 class Login(BaseModel):
-    username: str
+    email: EmailStr
     password: str
     class Config:
         schema_extra = {
             "login_example" : {
-                "username": "fikri",
+                "email": "fikri@tes.com",
                 "password": "password"
             }
         }
@@ -30,4 +30,4 @@ class Token(BaseModel):
     token_type: str
 
 class TokenData(BaseModel):
-    username: Optional[str] = None
+    email: Optional[str] = None
