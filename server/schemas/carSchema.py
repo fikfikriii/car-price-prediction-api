@@ -24,32 +24,6 @@ with open('./server/models/data/car_columns.json', 'r') as f:
     data_columns = json.load(f)['data_columns']
     mobil = data_columns[2:]
     transmisi = data_columns[2:]
-
-def delete(id: int):
-    valid_car = {"id": {id}}
-    try:
-        cars_collection.delete_one(valid_car)
-        return (f"Data mobil bekas dengan ID = {id} berhasil dihapus")
-    except:
-        return (f"Data mobil bekas dengan ID = {id} tidak ditemukan")
-
-def create(car: Car):
-    idx = 1
-    for car in carSchema.cars_serializer(cars_collection.find()):
-        idx += 1
-    car_dict = {
-        "id": idx,
-        "nama_mobil": car.nama_mobil,
-        "tahun": car.tahun,
-        "odo": car.odo,
-        "jenis_transmisi": car.jenis_transmisi,
-        "harga": car.harga
-    }
-    try:
-        cars_collection.insert_one(car_dict)
-        return ("Berhasil menambahkan data mobil")
-    except:
-        return ("Data mobil gagal ditambahkan. Harap masukan data yang sesuai!")
     
 def get_estimated_car_price(mobil, tahun, odo, transmisi):
     try:
